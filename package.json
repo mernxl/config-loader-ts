@@ -4,8 +4,14 @@
   "description": "A node JS env and configuration loader with typescript support. Build in support to load with respect to your environment, dev, prod etc",
   "author": "mernxl <mernxl@gmail.com>",
   "license": "MIT",
-  "repository": "https://github.com/mernxl/configu.git",
-  "bugs": "https://github.com/mernxl/configu/issues",
+  "homepage": "https://github.com/mernxl/configu#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mernxl/configu.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mernxl/configu/issues"
+  },
   "keywords": [
     "config",
     "properties",
@@ -16,6 +22,9 @@
   ],
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
+  "directories": {
+    "lib": "lib"
+  },
   "files": [
     "lib"
   ],
