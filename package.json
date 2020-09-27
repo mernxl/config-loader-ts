@@ -1,0 +1,49 @@
+{
+  "name": "template-node-package",
+  "version": "1.0.0",
+  "description": "Template for node Packages written in TypeScript, Features Jest, Eslint, Prettier",
+  "author": "mernxl <mernxl@gmail.com>",
+  "license": "MIT",
+  "repository": "https://github.com/mernxl/template-node-package.git",
+  "bugs": "https://github.com/mernxl/template-node-package/issues",
+  "keywords": [
+    "template",
+    "node",
+    "typescript",
+    "jest",
+    "eslint",
+    "prettier"
+  ],
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build": "yarn run clean && yarn run tsc -d",
+    "clean": "rimraf lib",
+    "tsc": "tsc",
+    "jest": "jest --maxWorkers 2",
+    "coverage": "jest --coverage --maxWorkers 2",
+    "lint": "eslint src",
+    "lint:fix": "yarn run lint --fix",
+    "test": "tsc && yarn run lint && yarn run jest"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.2.0",
+    "@typescript-eslint/parser": "^4.2.0",
+    "eslint": "^7.10.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-simple-import-sort": "^5.0.3",
+    "jest": "^26.4.2",
+    "prettier": "^2.1.2",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^26.4.0",
+    "typescript": "^4.0.3"
+  }
+}

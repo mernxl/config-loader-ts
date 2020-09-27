@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "outDir": "./lib",
+    "strict": true,
+    "sourceMap": false,
+    "inlineSourceMap": true,
+    "skipLibCheck": true,
+    "typeRoots": [
+      "node_modules/@types"
+    ]
+  },
+  "include": [
+    "src/**/*.ts",
+    "typings"
+  ],
+  "exclude": [
+    "**/*.spec.ts",
+    "src/**/__mocks__",
+    "src/**/__tests__",
+    "node_modules"
+  ]
+}
