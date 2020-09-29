@@ -41,11 +41,36 @@ export const parseProperties = <PropType = Record<string, any>>(
   return config as PropType;
 };
 
+const resolveFilePath = (filePath: string): string[] => {
+  let filename, basePath;
+
+  const lastIndex = filePath.lastIndexOf('/');
+
+  if (lastIndex > -1) {
+    filename = filePath.slice(lastIndex + 1);
+    basePath = filePath.slice(0, lastIndex + 1);
+  } else {
+    filename = filePath;
+    basePath = '';
+  }
+
+  // lets skip initial .
+  const fileNameParts = (filename.startsWith('.') ? filename.slice(1) : filename).split('.');
+  if (filename.startsWith('.')) {
+    basePath += `.${fileNameParts[0]}`;
+  } else {
+    basePath += fileNameParts[0];
+  }
+
+  // basePath contains up to where we can add NodeEnv, i.e. ../.app
+  return [basePath, ...fileNameParts.slice(1)];
+};
+
 const loadLocalPoint = <LocalType = DefaultConfigType>(
-  pointName: string,
+  pointPath: string,
   oldVars: DefaultConfigType,
 ): LocalType | undefined => {
-  const paths = pointName.split('.').reverse();
+  const paths = resolveFilePath(pointPath).reverse();
 
   let vars: LocalType | undefined = undefined;
 
@@ -81,7 +106,7 @@ export function loadConfig<
   filePath: string,
   defaults?: Partial<PropType>,
 ): PropType & InternalType & LocalsType & NodeJS.ProcessEnv {
-  const paths = filePath.split('.');
+  const paths = resolveFilePath(filePath);
 
   const currentNODE_ENV = process.env.NODE_ENV || NODE_ENV.DEVELOPMENT;
 

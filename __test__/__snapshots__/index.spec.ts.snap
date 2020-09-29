@@ -3,3 +3,5 @@
 exports[`loadConfig load order should parse correctly 1`] = `"Changed in process.env"`;
 
 exports[`loadConfig should parse correctly 1`] = `"Development File Version"`;
+
+exports[`loadConfig should parse correctly files starting with dot 1`] = `"Development File Version"`;

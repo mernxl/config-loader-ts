@@ -14,6 +14,10 @@ describe('loadConfig', () => {
     expect(loadConfig('__mocks__/properties1/app.ini').CHANGED_VAR).toMatchSnapshot();
   });
 
+  it('should parse correctly files starting with dot', () => {
+    expect(loadConfig('__mocks__/properties1/.app.ini').CHANGED_VAR).toMatchSnapshot();
+  });
+
   describe('load order', () => {
     beforeEach(() => {
       process.env.CHANGED_VAR = 'Changed in process.env';
