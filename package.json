@@ -36,7 +36,8 @@
     "coverage": "jest --coverage --maxWorkers 2",
     "lint": "eslint src",
     "lint:fix": "yarn run lint --fix",
-    "test": "tsc && yarn run lint && yarn run jest"
+    "test": "tsc && yarn run lint && yarn run jest",
+    "prepublishOnly": "yarn run test && yarn run build"
   },
   "jest": {
     "preset": "ts-jest",
