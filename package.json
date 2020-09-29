@@ -1,6 +1,6 @@
 {
   "name": "@xelgrp/configu",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A node JS env and configuration loader with typescript support. Build in support to load with respect to your environment, dev, prod etc",
   "author": "mernxl <mernxl@gmail.com>",
   "license": "MIT",
