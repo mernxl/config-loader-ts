@@ -9,6 +9,8 @@ export enum NODE_ENV {
   DEVELOPMENT = 'development',
 }
 
+export type DefaultConfigType = Record<string, any>;
+
 /**
  * Synchronously load and parse a properties file.
  * @param propsPath
@@ -39,9 +41,9 @@ export const parseProperties = <PropType = Record<string, any>>(
   return config as PropType;
 };
 
-const loadLocalPoint = <LocalType = Record<string, any>>(
+const loadLocalPoint = <LocalType = DefaultConfigType>(
   pointName: string,
-  oldVars?: any,
+  oldVars: DefaultConfigType,
 ): LocalType | undefined => {
   const paths = pointName.split('.').reverse();
 
@@ -62,66 +64,61 @@ const loadLocalPoint = <LocalType = Record<string, any>>(
 };
 
 /**
- * Used to get properties, changes base on the "NODE_ENV" file.
+ * Function to load configuration files
  *
- * development, production, test, you just need to terminate it with .ini
- *
- * for every point, development, or direct file, it loads
- * app.point.local.ini file
- * it will also load for app.ini, app.local.ini
- *
- * also it must follow convention, if app.ini as base, then app.NODE_ENV.ini
- *
- * Values can be taken from process.env or from the NODE_ENV file,
- * if a referenced variable is not found, then an exception is thrown.
+ * Check out [README.md](https://github.com/mernxl/configu#readme) File for more information.
  *
  * @see https://www.npmjs.com/package/properties
  *
- * @param {string} fileName - Form any.properties
+ * @param {string} filePath - path to file
  * @param {object} defaults - pass in a defaults var, use if not in process env
  */
-export const loadConfig = <
-  PropType = Record<string, any>,
-  InternalType = Record<string, any>,
-  LocalsType = Record<string, any>
+export function loadConfig<
+  PropType = DefaultConfigType,
+  InternalType = DefaultConfigType,
+  LocalsType = DefaultConfigType
 >(
-  fileName: string,
+  filePath: string,
   defaults?: Partial<PropType>,
-): PropType & InternalType & LocalsType => {
-  const paths = fileName.split('.');
+): PropType & InternalType & LocalsType & NodeJS.ProcessEnv {
+  const paths = filePath.split('.');
 
-  let vars = {};
-  const NODE_ENV = process.env.NODE_ENV;
-  const varsMerger = mergeDeepRight(mergeDeepRight(defaults || {}, process.env));
+  const currentNODE_ENV = process.env.NODE_ENV || NODE_ENV.DEVELOPMENT;
+
+  let vars: Record<string, any> = mergeDeepRight<DefaultConfigType, DefaultConfigType>(
+    defaults || {},
+    process.env,
+  );
 
   // ensure 2 in paths, if 3 or more then its final
-  if (NODE_ENV && paths.length === 2) {
+  if (currentNODE_ENV && paths.length === 2) {
     // e.g. app.NODE_ENV.ini
-    const pointName = [paths[0], NODE_ENV, paths[1]].join('.');
-
+    const pointName = [paths[0], currentNODE_ENV, paths[1]].join('.');
     const envDepPropsPath = path.resolve(pointName);
 
-    if (fs.existsSync(envDepPropsPath)) {
-      vars = parseProperties<InternalType>(envDepPropsPath, varsMerger({}));
-    }
-
-    const localPoint = loadLocalPoint<LocalsType>(pointName);
+    // load local
+    const localPoint = loadLocalPoint<LocalsType>(pointName, vars);
     if (localPoint) {
       vars = mergeDeepRight(vars, localPoint as any);
     }
+
+    // load env file
+    if (fs.existsSync(envDepPropsPath)) {
+      vars = mergeDeepRight(vars, parseProperties<InternalType>(envDepPropsPath, vars) as any);
+    }
   }
 
-  vars = varsMerger(vars);
-
-  const requiredLocal = loadLocalPoint<LocalsType>(fileName);
-
+  // required file's local
+  const requiredLocal = loadLocalPoint<LocalsType>(filePath, vars);
   if (requiredLocal) {
     vars = mergeDeepRight(vars, requiredLocal as any);
   }
 
   // we only get vars as seen in the fileName file
-  return mergeDeepRight(
-    mergeDeepRight(vars, parseProperties<PropType>(path.resolve(fileName), vars) as any),
-    process.env as any,
+  vars = mergeDeepRight(
+    vars,
+    parseProperties<PropType>(path.resolve(filePath), mergeDeepRight(vars, process.env)) as any,
   );
-};
+
+  return mergeDeepRight(vars, process.env as any);
+}
