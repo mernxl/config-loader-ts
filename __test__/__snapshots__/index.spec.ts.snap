@@ -1,5 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`loadConfig load order 2 should parse correct order of local files, dev 1`] = `
+Object {
+  "GLOBAL_ENV_VAR": "'From local.ini'",
+  "VAR_IN_PROD": "'From local.ini'",
+}
+`;
+
+exports[`loadConfig load order 2 should parse correct order of local files, production 1`] = `
+Object {
+  "GLOBAL_ENV_VAR": "'From production.local.ini'",
+  "SOME_VAR": "some variable",
+  "VAR_IN_PROD": "'From production.local.ini'",
+}
+`;
+
 exports[`loadConfig load order should parse correctly 1`] = `"Changed in process.env"`;
 
 exports[`loadConfig should parse correctly 1`] = `"Development File Version"`;
