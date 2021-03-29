@@ -31,13 +31,13 @@
   "scripts": {
     "build": "yarn run clean && yarn run tsc -d",
     "clean": "rimraf lib",
-    "tsc": "tsc",
-    "jest": "jest --maxWorkers 2",
-    "coverage": "jest --coverage --maxWorkers 2",
+    "tscheck": "tsc --noEmit",
+    "jest": "jest --maxWorkers 4",
+    "coverage": "jest --coverage --maxWorkers 4",
     "lint": "eslint src",
     "lint:fix": "yarn run lint --fix",
-    "test": "tsc && yarn run lint && yarn run jest",
-    "prepublishOnly": "yarn run test && yarn run build"
+    "test": "yarn run lint && yarn run tscheck && yarn run coverage",
+    "semantic-release": "semantic-release"
   },
   "jest": {
     "preset": "ts-jest",
@@ -54,6 +54,7 @@
     "jest": "^26.4.2",
     "prettier": "^2.1.2",
     "rimraf": "^3.0.2",
+    "semantic-release": "^17.4.2",
     "ts-jest": "^26.4.0",
     "typescript": "^4.0.3"
   },
