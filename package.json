@@ -37,13 +37,23 @@
     "lint": "eslint src",
     "lint:fix": "yarn run lint --fix",
     "test": "yarn run lint && yarn run tscheck && yarn run coverage",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release --dry-run"
   },
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node"
   },
+  "release": {
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/changelog",
+      "@semantic-release/github",
+      "@semantic-release/npm"
+    ]
+  },
   "devDependencies": {
+    "@semantic-release/changelog": "^5.0.1",
     "@types/ramda": "^0.27.19",
     "@typescript-eslint/eslint-plugin": "^4.2.0",
     "@typescript-eslint/parser": "^4.2.0",

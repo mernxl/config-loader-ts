@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.1](https://github.com/mernxl/configu/compare/v1.1.0...v1.1.1) (2021-03-29)
+
+
+### Bug Fixes
+
+* fix variable order, ensure we have prod.local replace prod replace local ... ([5943fd5](https://github.com/mernxl/configu/commit/5943fd5a48aecd33d9a2f729dc4d562c9fcba290))
+
+
 ## [1.1.0](https://github.com/mernxl/configu/compare/v1.0.0...v1.1.0) (2020-09-29)
 
 
