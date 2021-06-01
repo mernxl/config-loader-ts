@@ -129,7 +129,7 @@ export function loadConfig<
 
     // load env file
     if (fs.existsSync(envDepPropsPath)) {
-      vars = mergeDeepRight(parseProperties<InternalType>(envDepPropsPath, vars) as any, vars);
+      vars = mergeDeepRight(vars, parseProperties<InternalType>(envDepPropsPath, vars) as any);
     }
   }
 

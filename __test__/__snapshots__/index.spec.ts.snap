@@ -15,6 +15,8 @@ Object {
 }
 `;
 
+exports[`loadConfig load order should override defaults with env vars 1`] = `"Changed in process.env"`;
+
 exports[`loadConfig load order should parse correctly 1`] = `"Changed in process.env"`;
 
 exports[`loadConfig should parse correctly 1`] = `"Development File Version"`;

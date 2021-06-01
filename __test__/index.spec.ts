@@ -39,6 +39,14 @@ describe('loadConfig', () => {
     it('should parse correctly', () => {
       expect(loadConfig('__mocks__/properties1/app.ini').CHANGED_VAR).toMatchSnapshot();
     });
+
+    it('should override defaults with env vars', () => {
+      expect(
+        loadConfig('__mocks__/properties1/app.ini', {
+          CHANGED_VAR: 'Initial, Default',
+        }).CHANGED_VAR,
+      ).toMatchSnapshot();
+    });
   });
 
   describe('load order 2', () => {
