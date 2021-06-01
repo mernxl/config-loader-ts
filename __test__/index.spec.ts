@@ -48,6 +48,7 @@ describe('loadConfig', () => {
             CHANGED_VAR: 'Initial, Default',
             field: {
               checker: 'initial',
+              stays: 'Should be present in final and not overwritten',
             },
           }),
         ),

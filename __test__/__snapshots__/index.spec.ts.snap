@@ -20,6 +20,7 @@ Object {
   "CHANGED_VAR": "Changed in process.env",
   "field": Object {
     "checker": "checker",
+    "stays": "Should be present in final and not overwritten",
   },
 }
 `;
