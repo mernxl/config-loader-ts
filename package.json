@@ -37,7 +37,7 @@
     "lint": "eslint src",
     "lint:fix": "yarn run lint --fix",
     "test": "yarn run lint && yarn run tscheck && yarn run coverage",
-    "semantic-release": "semantic-release --dry-run"
+    "semantic-release": "semantic-release"
   },
   "jest": {
     "preset": "ts-jest",
