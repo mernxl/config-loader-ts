@@ -15,7 +15,14 @@ Object {
 }
 `;
 
-exports[`loadConfig load order should override defaults with env vars 1`] = `"Changed in process.env"`;
+exports[`loadConfig load order should override defaults with env vars 1`] = `
+Object {
+  "CHANGED_VAR": "Changed in process.env",
+  "field": Object {
+    "checker": "checker",
+  },
+}
+`;
 
 exports[`loadConfig load order should parse correctly 1`] = `"Changed in process.env"`;
 

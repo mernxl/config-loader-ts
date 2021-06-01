@@ -129,21 +129,25 @@ export function loadConfig<
 
     // load env file
     if (fs.existsSync(envDepPropsPath)) {
-      vars = mergeDeepRight(vars, parseProperties<InternalType>(envDepPropsPath, vars) as any);
+      vars = mergeDeepRight(
+        vars,
+        parseProperties<InternalType>(envDepPropsPath, mergeDeepRight(vars, process.env)) as any,
+      );
     }
   }
 
   // required file's local
-  const requiredLocal = loadLocalPoint<LocalsType>(filePath, vars);
+  const requiredLocal = loadLocalPoint<LocalsType>(filePath, mergeDeepRight(vars, process.env));
   if (requiredLocal) {
     vars = mergeDeepRight(requiredLocal as any, vars);
   }
 
   // we only get vars as seen in the fileName file
   vars = mergeDeepRight(
-    parseProperties<PropType>(path.resolve(filePath), mergeDeepRight(vars, process.env)) as any,
     vars,
+    parseProperties<PropType>(path.resolve(filePath), mergeDeepRight(vars, process.env)) as any,
   );
 
+  // process.env always have priority
   return mergeDeepRight(vars, process.env as any);
 }
